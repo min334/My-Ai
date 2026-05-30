@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-container { height: 70vh; }
+    </style>
+</head>
+<body class="bg-slate-900 text-gray-100">
+    <div class="max-w-2xl mx-auto p-4">
+        <h1 class="text-3xl font-bold text-center mb-6 text-blue-400">AI Personal Assistant</h1>
+        <div id="chat-box" class="chat-container bg-slate-800 p-4 rounded-xl shadow-lg overflow-y-auto mb-4 border border-slate-700"></div>
+        <div class="flex gap-2">
+            <input id="user-msg" class="flex-1 p-3 bg-slate-700 rounded-lg outline-none border border-slate-600 focus:border-blue-500" placeholder="မေးခွန်းတစ်ခုခုမေးပါ...">
+            <button onclick="sendMsg()" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg font-semibold transition">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMsg() {
+            let input = document.getElementById("user-msg");
+            let msg = input.value;
+            if(!msg) return;
+
+            document.getElementById("chat-box").innerHTML += `<p class="mb-3 text-right text-blue-200"><b>You:</b> ${msg}</p>`;
+            input.value = '';
+
+            try {
+                let res = await fetch('http://192.168.1.3:5000/get', { 
+                    method: 'POST', body: new URLSearchParams({'msg': msg}) 
+                });
+                let data = await res.json();
+                document.getElementById("chat-box").innerHTML += `<p class="mb-3 text-green-300"><b>AI:</b> ${data.response}</p>`;
+            } catch(e) {
+                document.getElementById("chat-box").innerHTML += `<p class="mb-3 text-red-400">Error: Connection failed!</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
