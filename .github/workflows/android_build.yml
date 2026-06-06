@@ -22,8 +22,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # Library အသစ်များကို အပြည့်အဝ ဆွဲချပြီးမှ Build လုပ်ရန် --refresh-dependencies ကို သုံးထားပါတယ်
       - name: Build with Gradle
-        run: ./gradlew assembleDebug
+        run: ./gradlew clean :app:assembleDebug --refresh-dependencies --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
