@@ -19,12 +19,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      # local.properties ဖိုင်ကို အတုဖန်တီးပေးခြင်း (API Key error မတက်စေရန်)
+      - name: Create local.properties
+        run: echo "OPENROUTER_API_KEY=dummy_key" > local.properties
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # Library အသစ်များကို အပြည့်အဝ ဆွဲချပြီးမှ Build လုပ်ရန် --refresh-dependencies ကို သုံးထားပါတယ်
+      # Build လုပ်ခြင်း
       - name: Build with Gradle
-        run: ./gradlew clean :app:assembleDebug --refresh-dependencies --stacktrace
+        run: ./gradlew clean :app:assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
