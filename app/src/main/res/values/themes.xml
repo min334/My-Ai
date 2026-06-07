@@ -13,8 +13,8 @@
         <item name="colorOnSurface">@color/md_theme_onSurface</item>
         <item name="colorSurfaceVariant">@color/md_theme_surfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_onSurfaceVariant</item>
-        <item name="colorBackground">@color/md_theme_background</item>
-        <item name="colorOnBackground">@color/md_theme_onBackground</item>
+        <item name="android:colorBackground">@color/md_theme_background</item>
+        <item name="android:colorOnBackground">@color/md_theme_onBackground</item>
         <item name="colorError">@color/md_theme_error</item>
         <item name="colorOnError">@color/md_theme_onError</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -23,7 +23,6 @@
         <item name="postSplashScreenTheme">@style/Theme.PersonalAIAgent</item>
     </style>
 
-    <!-- Splash Screen theme (shown before app launches) -->
     <style name="Theme.PersonalAIAgent.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/md_theme_primaryContainer</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_ai_brain</item>
