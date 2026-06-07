@@ -13,9 +13,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Gradle and show detailed error
-        # --stacktrace နဲ့ --debug option တွေကို ထည့်ပေးထားပါတယ်
-        run: ./gradlew assembleDebug --stacktrace --debug
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean assembleDebug
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
