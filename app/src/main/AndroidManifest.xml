@@ -2,33 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- ───────────────────────────────────────────
-         PERMISSIONS
-    ─────────────────────────────────────────── -->
-
-    <!-- Network access for Gemini API calls -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Microphone for voice input -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <!-- Vibration feedback on activation -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <!-- Keep CPU awake during AI processing -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- Draw floating overlay on top of other apps -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-    <!-- Run foreground services (overlay + accessibility) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-
-    <!-- Exclude from battery optimization so service keeps running -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
-    <!-- Receive boot completed to restart service after reboot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -36,14 +17,13 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@android:mipmap/sym_def_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@android:mipmap/sym_def_app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalAIAgent"
         tools:targetApi="31">
 
-        <!-- ─── Main Activity ─── -->
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true"
@@ -54,18 +34,11 @@
             </intent-filter>
         </activity>
 
-        <!-- ─── Settings Activity ─── -->
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:exported="false"
             android:parentActivityName=".ui.activity.MainActivity" />
 
-        <!-- ─── Global Tap Detection — Accessibility Service ─── -->
-        <!--
-             The accessibility service listens for touch events across all apps.
-             It must be declared with BIND_ACCESSIBILITY_SERVICE permission and
-             the serviceConfig metadata pointing to our XML configuration.
-        -->
         <service
             android:name=".accessibility.TapDetectionAccessibilityService"
             android:exported="true"
@@ -79,11 +52,6 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <!-- ─── Floating Overlay Service ─── -->
-        <!--
-             Draws the floating AI bubble on top of all windows.
-             Requires SYSTEM_ALERT_WINDOW permission granted by the user.
-        -->
         <service
             android:name=".overlay.FloatingOverlayService"
             android:exported="false"
@@ -93,7 +61,6 @@
                 android:value="assistantOverlay" />
         </service>
 
-        <!-- ─── Boot Receiver — restart service after reboot ─── -->
         <receiver
             android:name=".service.BootReceiver"
             android:exported="true">
