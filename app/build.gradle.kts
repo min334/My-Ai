@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.hilt.android)
 }
 
-// Load API key from local.properties (never commit this file to version control)
 val localProperties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
@@ -24,13 +23,8 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // OpenRouter API key — optional build-time injection from local.properties.
-        // If blank here, the user enters the key at runtime in the Settings card
-        // and it is stored in EncryptedSharedPreferences (SecureStorageManager).
-        // Add OPENROUTER_API_KEY=sk-or-... to local.properties (gitignored).
         buildConfigField(
             "String",
             "OPENROUTER_API_KEY",
@@ -81,9 +75,11 @@ dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.security.crypto)
+    
+    // Security Library — Version အတိအကျနဲ့ ထည့်သွင်းထားပါသည်
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
-    // Hilt Dependency Injection
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
@@ -99,17 +95,13 @@ dependencies {
 
     // JSON
     implementation(libs.gson)
-
-    // Lottie animations
     implementation(libs.lottie)
 
-    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-// Allow references to generated code (Hilt)
 kapt {
     correctErrorTypes = true
 }
